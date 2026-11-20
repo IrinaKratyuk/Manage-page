@@ -20,6 +20,9 @@
     { id: 'redo', label: 'Повторить', glyph: 'E6CA' },
     { id: 'reset', label: 'Сбросить', glyph: 'E629' },
     { id: 'preview', label: 'Предпросмотр', glyph: 'EAB9' },
+    { id: 'share', label: 'Поделиться', glyph: 'E61A' },
+    { id: 'layout', label: 'Компоновка', glyph: 'EBBA' },
+    { id: 'pages', label: 'Список страниц', glyph: 'E67D' },
   ];
   const HANDLERS = { undo: 'onUndo', redo: 'onRedo', reset: 'onReset', preview: 'onPreview', edit: 'onEdit', save: 'onSave', close: 'onClose', 'zoom-reset': 'onZoomReset' };
 
@@ -62,6 +65,7 @@
           return '<button type="button" class="tumbler__item" role="radio" data-bhd-cmd="device" data-bhd-device="' + d.id + '" aria-checked="' + (d.id === device) + '" aria-label="' + esc(d.label) + '" title="' + esc(d.label) + '">' + glyph(d.glyph, 'tumbler__icon') + '</button>';
         }).join('') + '</div>';
       }
+      if (o.centerZoom) html += '<button type="button" class="btn btn--link btn--style-secondary btn--size-m bhd__center-zoom" data-bhd-cmd="zoom-reset" aria-label="Масштаб 100%">100%</button>';
       html += '</div><div class="bhd__actions">';
       if (editing && history) {
         const items = HISTORY.filter(function (h) { return history[h.id] !== undefined && history[h.id] !== null; });
@@ -81,7 +85,10 @@
         html += '<div class="bhd__revision">' + (r.image ? '<img class="bhd__revision-image" src="' + esc(r.image) + '" alt="">' : '<span class="bhd__revision-image" aria-hidden="true"></span>') +
           '<span>' + esc(r.date || '') + '</span></div>';
       }
-      if (editing) {
+      if (editing && o.publish) {
+        html += '<button type="button" class="btn btn--same-outlined btn--style-primary btn--size-m bhd__publish" data-bhd-cmd="publish">Опубликовать</button>' +
+          '<button type="button" class="btn btn--filled btn--style-success btn--size-m btn--icon bhd__confirm" data-bhd-cmd="save" aria-label="Сохранить">' + glyph('E75E', 'btn__icon') + '</button>';
+      } else if (editing) {
         html += '<button type="button" class="btn btn--same-outlined btn--style-success btn--size-m bhd__pill bhd__pill--save" data-bhd-cmd="save">Сохранить' + glyph('E75E', 'bhd__save-check') + '</button>';
       } else if (o.editable) {
         html += '<button type="button" class="btn btn--same-outlined btn--style-secondary btn--size-m bhd__pill bhd__pill--edit" data-bhd-cmd="edit">Изменить' + glyph('E660', 'btn__icon') + '</button>';
