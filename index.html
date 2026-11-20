@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Управление страницами в конструкторе</title>
+  <link rel="stylesheet" href="vendor/tokens.css">
+  <link rel="stylesheet" href="vendor/button.css">
+  <link rel="stylesheet" href="vendor/tumbler.css">
+  <link rel="stylesheet" href="vendor/close-button.css">
+  <link rel="stylesheet" href="vendor/builder-header.css">
+  <link rel="stylesheet" href="vendor/left-sidebar.css">
+  <link rel="stylesheet" href="vendor/right-sidebar.css">
+  <link rel="stylesheet" href="vendor/demo-frame.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/builder-header.js" defer></script>
+  <script src="vendor/demo-frame.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="builder" id="demo-stage">
+    <header id="builder-header" aria-label="Шапка конструктора"></header>
+    <div class="workspace">
+      <aside class="lsb" aria-label="Страницы">
+        <section class="lsb__panel">
+          <header class="lsb__head">
+            <div class="lsb__title"><h3 class="lsb__name">Страницы</h3><button type="button" class="btn btn--filled btn--style-pale btn--size-m" data-lsb-add aria-label="Добавить страницу"><span class="btn__icon" aria-hidden="true">&#xeadd;</span></button></div>
+            <div class="lsb__toggle"><button type="button" class="btn btn--filled btn--style-pale btn--icon" aria-label="Свернуть список страниц"><span class="btn__icon" aria-hidden="true">&#xebfa;</span></button></div>
+          </header>
+          <nav class="lsb__list" aria-label="Страницы виджета">
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Заведения</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <hr>
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Услуги</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <div class="lsb__page is-active" role="button" tabindex="0" aria-current="page"><span class="lsb__marker"></span><span class="lsb__page-name">Специалисты</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Дата и время</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <hr>
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Карточка товара</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Оформление</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+            <div class="lsb__page" role="button" tabindex="0"><span class="lsb__marker"></span><span class="lsb__page-name">Финальный экран</span><span class="lsb__cmds"><button type="button" class="btn btn--link btn--style-label btn--size-m btn--icon" aria-label="Ещё"><span class="btn__icon" aria-hidden="true">&#xe9d9;</span></button></span></div>
+          </nav>
+        </section>
+        <button class="pages-reopen btn btn--filled btn--style-pale btn--size-xl btn--icon" type="button" aria-label="Развернуть список страниц" hidden><span class="btn__icon" aria-hidden="true">&#xebfb;</span></button>
+      </aside>
+      <main aria-label="Рабочая область конструктора">
+        <section class="booking-preview" aria-label="Статичная страница виджета записи">
+          <div class="axure-canvas">
+            <img class="axure-bg axure-bg-left" src="axure/u458.png" alt="">
+            <img class="axure-bg axure-bg-middle" src="axure/u374.png" alt="">
+            <img class="axure-bg axure-bg-right" src="axure/u459.png" alt="">
+            <div class="axure-brand"><img src="axure/u489.png" alt=""><span>Незнакомка</span></div>
+            <span class="axure-close" aria-hidden="true">&#xe66c;</span>
+            <img id="booking-page" class="axure-page" src="axure/u510.png" width="600" height="768" alt="Специалисты — статичный экран из макета Axure">
+          </div>
+        </section>
+      </main>
+      <aside class="rsb" aria-label="Инструменты конструктора">
+        <div class="rsb__bar">
+          <div class="rsb__items">
+            <button type="button" class="rsb__item rsb__item--shop" aria-label="Магазин" title="Магазин"><span class="rsb__icon" aria-hidden="true">&#xeadd;</span></button>
+            <button type="button" class="rsb__item" aria-label="Данные" title="Данные"><span class="rsb__icon" aria-hidden="true">&#xebbc;</span></button>
+            <button type="button" class="rsb__item" aria-label="Слои" title="Слои"><span class="rsb__icon" aria-hidden="true">&#xebf9;</span></button>
+          </div>
+          <div class="rsb__dock"><button type="button" class="btn btn--filled btn--style-pale btn--size-xl btn--icon" aria-label="Развернуть панель"><span class="btn__icon" aria-hidden="true">&#xebfa;</span></button></div>
+          <div class="rsb__informers"><button type="button" class="rsb__help" aria-label="Помощь">?</button></div>
+        </div>
+      </aside>
+    </div>
+    <div id="feedback" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
