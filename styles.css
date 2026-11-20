@@ -15,9 +15,9 @@ main{flex:1;min-height:0;min-width:0}
 button:focus-visible{outline:2px solid #587ab0;outline-offset:3px}
 #feedback{position:absolute;bottom:24px;left:24px;max-width:calc(100% - 48px);padding:12px 16px;background:#fff;border-radius:8px;box-shadow:0 4px 20px #0002;font-size:14px;opacity:0;pointer-events:none}
 #feedback.visible{opacity:1}
-@media(max-width:1200px){.bhd{grid-template-columns:minmax(0,1fr) auto auto;column-gap:16px}.bhd__center{position:static;translate:none;grid-column:2}.bhd__actions{grid-column:3}.bhd__history{gap:4px}.bhd__actions{gap:8px}}
-@container(max-width:1200px){.bhd{grid-template-columns:minmax(0,1fr) auto auto;column-gap:16px}.bhd__center{position:static;translate:none;grid-column:2}.bhd__actions{grid-column:3;gap:8px}.bhd__history{gap:4px}}
-@container(max-width:1000px){.bhd{height:84px;grid-template-columns:1fr auto;grid-template-rows:40px 44px;gap:0 12px}.bhd__title{grid-column:1;grid-row:1}.bhd__center{grid-column:2;grid-row:1}.bhd__actions{grid-column:1 / -1;grid-row:2;justify-content:flex-end}}
+@media(max-width:1200px){.bhd{grid-template-columns:minmax(0,1fr) auto auto;column-gap:16px}.bhd__actions{grid-column:3}.bhd__history{gap:4px}.bhd__actions{gap:8px}}
+@container(max-width:1200px){.bhd{grid-template-columns:minmax(0,1fr) auto auto;column-gap:16px}.bhd__actions{grid-column:3;gap:8px}.bhd__history{gap:4px}}
+@container(max-width:1000px){.bhd{height:84px;grid-template-columns:1fr auto;grid-template-rows:40px 44px;gap:0 12px}.bhd__title{grid-column:1;grid-row:1}.bhd__center{grid-row:1}.bhd__actions{grid-column:1 / -1;grid-row:2;justify-content:flex-end}}
 .df-radio:disabled{opacity:.45}
 .df-panel{background:transparent}
 .builder{border-radius:8px}
@@ -35,3 +35,46 @@ button:focus-visible{outline:2px solid #587ab0;outline-offset:3px}
 .axure-brand span{margin-left:0}
 .axure-close{position:absolute;left:831px;top:12px;width:32px;height:32px;border-radius:100px;background:rgba(0,0,0,.2);font:24px/32px cbuc-icons24;text-align:center;color:#fff}
 .axure-page{position:absolute;left:137px;top:67px;display:block;width:600px;height:768px;max-width:none}
+
+/* Reference rails for kiosk and surveys reuse the right-sidebar component. */
+.rsb__reference-icon{width:24px;height:24px;flex:none;color:var(--icon-icon-color)}
+/* Use native text rasterization; remove forced font smoothing across the demo. */
+html,body,body *{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto}
+
+/* More uses the same circular hover surface as the sidebar arrows. */
+.rsb .rsb__item.rsb__item--more:is(:hover,.is-hover){background:transparent}
+.rsb__item--more .rsb__icon{width:var(--inline_height-inline_height_xl);height:var(--inline_height-inline_height_xl);border-radius:50%}
+.rsb__item--more:is(:hover,.is-hover) .rsb__icon{background:var(--background-contrast-pale_hover_color);color:var(--icon-secondary_icon-color)}
+
+/* Survey header actions from the supplied reference, using UI-kit buttons. */
+.bhd__publish.btn{--btn-h:26px;padding-inline:12px;white-space:nowrap}
+.bhd__confirm.btn{--btn-h:26px;--btn-is:var(--icon-icon_size-icon-size_s);width:26px;padding:0;flex:none}
+
+/* Kiosk orientation switch and its fixed 100% label share the header center. */
+.bhd__center:has(.bhd__center-zoom){display:flex;align-items:center;gap:var(--offset-offset_m)}
+
+/* Match the branching glyph to the visual size of adjacent header icons. */
+.bhd__history [data-bhd-cmd="share"]{--btn-is:20px}
+
+/* Static kiosk content from the supplied screenshot; shared chrome is untouched. */
+.kiosk-preview{height:100%;display:flex;justify-content:center;align-items:flex-start;padding:0 12px 12px;overflow:hidden}
+.kiosk-static{display:block;height:100%;width:auto;max-width:100%;flex:none;border:12px solid #f7f7f7;border-radius:8px;background:#fff}
+
+/* Scenario-specific content and page lists, preserving shared header and right rail. */
+.survey-preview{height:100%;overflow:auto;padding:0 12px 12px}
+.survey-static{display:block;width:100%;height:auto;border:16px solid #dedede;border-radius:8px;background:#dedede}
+.scenario-page-icon{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;font:normal 24px/1 cbuc-icons24;color:#5b46b6}
+.lsb__page:has(.scenario-page-icon){gap:4px}
+.scenario-page-child{padding-left:30px}
+.scenario-page-child .scenario-page-icon{font-family:cbuc-icons;font-size:16px}
+.scenario-available{display:flex;align-items:center;gap:4px;margin:20px 4px 12px;color:var(--text-label_text-color);font-size:14px;white-space:nowrap}
+.scenario-available::before,.scenario-available::after{content:"";height:1px;flex:1;background:var(--extra-unaccented_separator_color)}
+.scenario-available-page{display:flex;align-items:center;gap:4px;padding:0 8px;color:var(--text-label_text-color)}
+.scenario-available-page .scenario-page-icon{color:inherit}
+
+.scenario-page-icon{font-size:16px}
+.scenario-page-icon--arrow{font-family:cbuc-icons;font-size:12px;color:var(--text-label_text-color)}
+
+/* Selection marker stays at the row edge, including indented questions. */
+.lsb__page>.lsb__marker{position:absolute;left:0;top:50%;translate:0 -50%}
+.lsb__page::before{content:"";width:3px;flex:none}

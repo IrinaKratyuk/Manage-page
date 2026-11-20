@@ -1,5 +1,18 @@
 'use strict';
-const demoTitles = {booking: 'Виджет записи', surveys: 'Опросы', kiosk: 'Киоск'};
+// Block command activation only: preserve pointer targeting, hover and tooltips.
+for (const region of document.querySelectorAll('#builder-header, .rsb')) {
+  region.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+  region.addEventListener('keydown', event => {
+    if (['Enter', ' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
+}
+const demoTitles = {booking: 'Виджет записи', surveys: 'Мой опрос', kiosk: 'Киоск'};
 // Original 600×768 screens exported by Axure; no client scenario is implemented.
 const bookingPages = [
   {name: 'Заведения', image: 'u571.png'},
@@ -18,6 +31,36 @@ function showBookingPage(index) {
   image.alt = page.name + ' — статичный экран из макета Axure';
   document.querySelector('.booking-preview').setAttribute('aria-label', page.name + ' — статичная страница виджета записи');
 }
+// Shared rail uses the supplied command sets. Hover stays enabled.
+const originalRightBar = document.querySelector('.rsb__bar').innerHTML;
+const sharedRightBarFooter = document.querySelector('.rsb__dock').outerHTML + document.querySelector('.rsb__informers').outerHTML;
+function drawRightTools(scenario) {
+  const bar = document.querySelector('.rsb__bar');
+  if (scenario === 'booking') { bar.innerHTML = originalRightBar; return; }
+  const textIcon = '<svg class="rsb__reference-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M4 6V3h16v3M12 3v19M8 22h8"/></svg>';
+  const commands = [['Магазин','eadd'],['Данные','ebbc'],['Слои','ebf9'],['Оформление','ebbb'],['Текст',null]];
+  if (scenario === 'surveys') commands.push(['Настройки','e75d'],['Ещё','e9d9']);
+  bar.innerHTML = '<div class="rsb__items">' + commands.map(([label,glyph],index) => '<button type="button" class="rsb__item'+(index===0?' rsb__item--shop':label==='Ещё'?' rsb__item--more':'')+'" aria-label="'+label+'" title="'+label+'">'+(glyph?'<span class="rsb__icon" aria-hidden="true">&#x'+glyph+';</span>':textIcon)+'</button>').join('')+'</div>' + sharedRightBarFooter;
+}
+const originalBookingList = document.querySelector('.lsb__list').innerHTML;
+function scenarioPage(name, glyph, child = false) {
+  return '<div class="lsb__page'+(child?' scenario-page-child':'')+'" role="button" tabindex="0"><span class="lsb__marker"></span>'+(glyph?'<span class="scenario-page-icon'+(['EB8A','EB89'].includes(glyph)?' scenario-page-icon--arrow':'')+'" aria-hidden="true">&#x'+glyph+';</span>':'')+'<span class="lsb__page-name">'+name+'</span></div>';
+}
+function drawScenarioPages(scenario) {
+  const list = document.querySelector('.lsb__list');
+  document.querySelector('.lsb__name').textContent = scenario === 'surveys' ? 'Вопросы' : 'Страницы';
+  list.setAttribute('aria-label', scenario === 'surveys' ? 'Вопросы опроса' : 'Страницы '+(scenario === 'kiosk' ? 'киоска' : 'виджета'));
+  if (scenario === 'booking') { list.innerHTML = originalBookingList; return; }
+  if (scenario === 'kiosk') {
+    list.innerHTML = ['Главная','Каталог','Карточка товара','Финальный экран'].map(name => scenarioPage(name)).join('');
+    return;
+  }
+  list.innerHTML = scenarioPage('Приветствие','E656') + scenarioPage('Страница 1','EB8A') +
+    scenarioPage('Каким ассортиментом будете торговать вы?','E6C8',true) +
+    scenarioPage('Какие инструменты увеличения продаж вы хотите запустить?','E6C7',true) +
+    scenarioPage('Страница 2','EB8A') + scenarioPage('Дополнительные вопросы','EB89') +
+    scenarioPage('Итоговая','E92C') + '<div class="scenario-available">Также доступно</div><div class="scenario-available-page"><span class="scenario-page-icon" aria-hidden="true">&#xe92c;</span>Итоговая</div>';
+}
 const demoStates = {};
 let activeDemo = 'booking';
 function selectDemo(scenario) {
@@ -28,8 +71,15 @@ function selectDemo(scenario) {
     collapsed: pagesPanel.hidden
   };
   activeDemo = scenario;
-  const state = demoStates[scenario] || {device: 'desktop', zoom: 100, page: 2, collapsed: false};
-  header.setTitle(demoTitles[scenario]);
+  const state = demoStates[scenario] || {device: 'desktop', zoom: 100, page: scenario === 'booking' ? 2 : scenario === 'surveys' ? 1 : 0, collapsed: false};
+  drawScenarioPages(scenario);
+  header.update({
+    title: demoTitles[scenario], icon: null,
+    devices: scenario === 'kiosk' ? [{id:'desktop', label:'Вертикально', glyph:'E637'}, {id:'tablet', label:'Горизонтально', glyph:'EBF8'}] : true,
+    centerZoom: scenario === 'kiosk', zoom: scenario === 'booking' ? state.zoom : false,
+    publish: scenario === 'surveys',
+    history: {undo: true, redo: true, reset: true, preview: scenario === 'kiosk' ? null : true, share: scenario === 'surveys' ? true : null, layout: scenario === 'kiosk' ? true : null, pages: scenario === 'kiosk' ? true : null}
+  });
   header.setDevice(state.device);
   header.setZoom(state.zoom);
   document.querySelectorAll('.lsb__page').forEach((item, index) => {
@@ -41,7 +91,10 @@ function selectDemo(scenario) {
   reopen.hidden = !state.collapsed;
   feedback.classList.remove('visible');
   document.querySelector('#demo-stage').dataset.demo = scenario;
+  drawRightTools(scenario);
   document.querySelector('.booking-preview').hidden = scenario !== 'booking';
+  document.querySelector('.kiosk-preview').hidden = scenario !== 'kiosk';
+  document.querySelector('.survey-preview').hidden = scenario !== 'surveys';
   if (scenario === 'booking') showBookingPage(state.page);
 }
 const demoFrame = DemoFrame.mount({
@@ -70,8 +123,9 @@ function notify(message) {
 }
 const header = BuilderHeader.mount(document.querySelector('#builder-header'), {
   title: 'Виджет записи',
+  icon: null,
   mode: 'edit',
-  history: {undo: false, redo: false, reset: false, preview: true},
+  history: {undo: true, redo: true, reset: true, preview: true},
   onSave() {
     try {
       localStorage.setItem(activeDemo + '-widget-header', JSON.stringify({device: header.device, zoom: header.zoom}));
@@ -89,7 +143,9 @@ try {
 } catch { /* Первый запуск или недоступное локальное хранилище. */ }
 // Радиогруппа доступна с клавиатуры, как и остальные элементы шапки.
 const group = document.querySelector('[role="radiogroup"]');
-document.querySelectorAll('.lsb__page').forEach(button => button.addEventListener('click', event => {
+document.querySelector('.lsb__list').addEventListener('click', event => {
+  const button = event.target.closest('.lsb__page');
+  if (!button) return;
   if (event.target.closest('.lsb__cmds')) { notify('Действия со страницами добавим на следующем этапе демо.'); return; }
   document.querySelectorAll('.lsb__page').forEach(item => {
     item.classList.toggle('is-active', item === button);
@@ -97,7 +153,7 @@ document.querySelectorAll('.lsb__page').forEach(button => button.addEventListene
     else item.removeAttribute('aria-current');
   });
   if (activeDemo === 'booking') showBookingPage([...document.querySelectorAll('.lsb__page')].indexOf(button));
-}));
+});
 const pagesPanel = document.querySelector('.lsb__panel');
 const reopen = document.querySelector('.pages-reopen');
 document.querySelector('.lsb__toggle button').addEventListener('click', () => {
@@ -124,10 +180,11 @@ group.addEventListener('keydown', event => {
 });
 
 document.querySelector('[data-lsb-add]').addEventListener('click', () => notify('Добавление страниц настроим на следующем этапе демо.'));
-document.querySelectorAll('.lsb__page').forEach(row => row.addEventListener('keydown', event => {
-  if (event.target !== row || !['Enter', ' '].includes(event.key)) return;
+document.querySelector('.lsb__list').addEventListener('keydown', event => {
+  const row = event.target.closest('.lsb__page');
+  if (!row || event.target !== row || !['Enter', ' '].includes(event.key)) return;
   event.preventDefault(); row.click();
-}));
+});
 
 // Fit only the static Axure canvas; editor controls stay at their original size.
 const preview = document.querySelector('.booking-preview');
