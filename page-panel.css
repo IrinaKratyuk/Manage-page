@@ -1,0 +1,69 @@
+/* Group header: Figma zHp5nfHnC4Ab7c5cgYONiI 6049:14795. */
+.lsb__group{position:relative;gap:var(--offset-offset_2xs);min-height:32px;margin:0;padding:var(--offset-offset_s) var(--offset-offset_m) var(--offset-offset_2xs);align-items:center}
+.lsb__group::before{order:0;content:'\e9aa';flex:none;width:16px;font:16px/1 cbuc-icons;color:var(--icon-label_icon-color)}
+.lsb__group[aria-expanded="false"]::before{transform:rotate(-90deg)}
+.lsb__group[aria-expanded]::after{order:2;content:'';height:1px;flex:1;min-width:8px;background:var(--extra-separator_color);font:inherit}
+.lsb__group-name{order:1;font-size:var(--font-font-size-font-size_m);font-weight:var(--font-font-weight-regular);color:var(--text-label_text-color);flex:0 1 auto;padding-bottom:2px}
+.lsb__group-state{order:3;display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:20px;padding:2px 4px;font:16px/1 cbuc-icons;color:var(--icon-unaccented_icon-color)}
+.lsb__group-actions{display:none;flex:none;align-items:center;position:absolute;right:8px;top:0;bottom:0;background:var(--background-background-color)}
+.lsb__group:is(:hover,:focus-visible,:has(:focus-visible),.is-menu) .lsb__group-actions{display:flex}
+.lsb__group[draggable="true"],.lsb__page[draggable="true"]{cursor:default}
+.lsb__page[draggable="true"]:active,.lsb__group[draggable="true"]:active{cursor:grabbing}
+.lsb__page:focus-within:not(.is-edit)>.lsb__cmds{display:flex}
+/* Insertion marker: Figma cOZH8uus26n9SyU5ORX62K 832:220473. */
+.lsb__insert{position:absolute;z-index:5;left:8px;right:8px;height:4px;border-radius:21px;background:rgba(123,98,248,.5);pointer-events:none}
+.lsb__page-icon{display:inline-flex;flex:none;align-items:center;justify-content:center;width:24px;height:24px;font:24px/1 cbuc-icons24;color:var(--icon-label_icon-color)}
+.lsb__list.has-page-icons .lsb__marker{margin-right:0}
+.lsb__page.is-off .lsb__page-icon{color:var(--text-unaccented_text-color)}
+.lsb__page--question{margin-left:30px}
+.lsb__page-icon-toggle{border:0;background:none;color:inherit;cursor:pointer;padding:0}
+.lsb__group-input{width:100%;min-width:0;border:0;border-bottom:1px solid var(--border-unaccented_border-color);font:inherit;background:transparent;color:var(--text-text-color)}
+.lsb__settings.pe{max-height:100%;overflow-y:auto}
+.universal-preview{height:100%;overflow:auto;padding:24px;background:var(--background-background-color);border-radius:var(--border-radius-border-radius_s);margin:0 8px 8px}
+.universal-preview h2{margin:0 0 12px;font-size:24px}.universal-preview p{line-height:1.5;max-width:640px}.universal-preview .pe__label{display:block;margin-bottom:8px}
+.panel-demo-notes{padding:12px;font:14px/1.5 Inter,sans-serif;color:var(--text-label_text-color)}
+.panel-demo-notes p{margin:0 0 8px}.panel-demo-notes button{margin-top:8px}
+
+.lsb__menu{border-color:var(--background-background-color);background-clip:border-box;width:max-content;min-width:240px;max-width:calc(100vw - 32px);max-height:100%;overflow-y:auto}
+.lsb .lsb__menu-item{flex-shrink:0}
+.lsb .lsb__menu-text{overflow:visible;text-overflow:clip;white-space:nowrap;flex-shrink:0}
+
+/* Information windows: Figma jR1RQPZka7deK3ecwCdGvx 15798:38398 / 15798:38296. */
+.panel-message{width:350px;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);margin:auto;padding:0 0 24px;border:0;border-radius:8px;box-shadow:0 0 18px rgba(0,0,0,.12);overflow:auto;color:var(--text-text-color);font-family:Inter,sans-serif;background-color:#fff}
+.panel-message::backdrop{background:transparent}
+.panel-message__head{height:43px;display:flex;align-items:center;justify-content:center}
+.panel-message__head img{display:block;flex:none}
+.panel-message__content{display:flex;flex-direction:column;gap:8px;align-items:center;padding:0 24px 24px;text-align:center}
+.panel-message__content p{margin:0;width:100%;overflow-wrap:anywhere;font-weight:400}
+#panel-message-title{font-size:18px;line-height:23px;letter-spacing:-.2538px;color:#000}
+#panel-message-comment{font-size:15px;line-height:normal;letter-spacing:-.2115px;color:#656c87;white-space:pre-wrap}
+.panel-message__buttons{display:flex;justify-content:center;gap:8px;padding:0 24px}
+.panel-message__buttons .btn{width:80px;height:24px;padding:0 12px;font-size:14px;font-weight:400;letter-spacing:-.1974px}
+.lsb__group-state[role="button"]{cursor:pointer}
+
+/* Comment corrections: status rail is always on the right, independently of hover commands.
+   Home marker: Figma G3QPR5r3X5ox6DmPwj6rJ7 16591:196769, cbuc-icons 16 / E64C.
+   Restriction glyph: ui-kit catalog Lock / E647. */
+.lsb__page,.lsb__group[aria-expanded]{cursor:default}
+.lsb__group{padding-right:8px}
+.lsb__group:has(.lsb__group-state) .lsb__group-actions{right:8px}
+.lsb__group:has(.lsb__group-actions):is(:hover,:focus-visible,:has(:focus-visible),.is-menu)>.lsb__group-state{visibility:hidden}
+.lsb__page-status{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;padding:4px}
+.lsb__status-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;flex:none;font:16px/1 cbuc-icons;color:var(--icon-unaccented_icon-color)}
+.lsb__status-icon[role="button"]{cursor:pointer}
+.lsb__page:has(.lsb__page-status)>.lsb__cmds{right:38px}
+.lsb__page[draggable="true"]:active,.lsb__group[draggable="true"]:active{cursor:grabbing}
+/* Hover commands replace status icons in the same right-hand slot. */
+.lsb .lsb__row-controls{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;min-width:28px;min-height:28px;background:transparent}
+.lsb .lsb__row-controls>.lsb__cmds{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;visibility:hidden;flex:none;background:transparent}
+.lsb__page:is(:hover,:focus-within,.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__cmds{visibility:visible}
+.lsb__page:is(:hover,:focus-within,.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__page-status{visibility:hidden}
+.lsb__page.is-edit>.lsb__row-controls{display:none}
+.lsb__page:has(.lsb__page-status)>.lsb__page-name{padding-right:32px}
+.lsb__group:is(:hover,:focus-visible,:has(:focus-visible))>.lsb__group-name{color:var(--text-label_hover_text-color)}
+.lsb__page-expand{display:inline-flex;align-items:center;justify-content:center;flex:none;width:24px;height:24px;padding:0;border:0;background:none;font:12px/1 cbuc-icons;color:var(--icon-label_icon-color);cursor:pointer}
+.lsb__page--survey>.lsb__page-icon{font:16px/1 cbuc-icons;color:var(--icon-info_icon-color)}
+.lsb__page--survey>.lsb__page-icon img{display:block;flex:none}
+.lsb__page--question.is-off>.lsb__page-icon{opacity:.5}
+.lsb .lsb__row-controls{background:transparent}
+.lsb__page:is(:hover,:focus-within,.is-menu)>.lsb__row-controls{background:var(--components-list-master_item_hover_background-color_list)}
