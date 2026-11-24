@@ -42,7 +42,7 @@ function drawRightTools(scenario) {
   const textIcon = '<svg class="rsb__reference-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M4 6V3h16v3M12 3v19M8 22h8"/></svg>';
   const commands = [['Магазин','eadd'],['Данные','ebbc'],['Слои','ebf9'],['Оформление','ebbb'],['Текст',null]];
   if (scenario === 'surveys') commands.push(['Настройки','e75d'],['Ещё','e9d9']);
-  bar.innerHTML = '<div class="rsb__items">' + commands.map(([label,glyph],index) => '<button type="button" class="rsb__item'+(index===0?' rsb__item--shop':label==='Ещё'?' rsb__item--more':'')+'" aria-label="'+label+'" title="'+label+'">'+(glyph?'<span class="rsb__icon" aria-hidden="true">&#x'+glyph+';</span>':textIcon)+'</button>').join('')+'</div>' + sharedRightBarFooter;
+  bar.innerHTML = '<div class="rsb__items">' + commands.map(([label,glyph],index) => '<button type="button" class="rsb__item'+(index===0?' rsb__item--shop':label==='Ещё'?' rsb__item--more':'')+'" aria-label="'+label+'">'+(glyph?'<span class="rsb__icon" aria-hidden="true">&#x'+glyph+';</span>':textIcon)+'</button>').join('')+'</div>' + sharedRightBarFooter;
 }
 const scenarioPages = {
   booking: bookingPages.map((page, index) => ({...page, id: index + 1, required: [0,4,5,6].includes(index), group: index === 0 ? 'start' : index < 4 ? 'core' : 'finish'})),
@@ -66,7 +66,7 @@ function decoratePages() {
     row.tabIndex = 0;
     row.draggable = activeDemo === 'booking' && page.group === 'core';
     row.setAttribute('aria-label', page.name + (page.off ? ', скрыта' : '') + (page.required ? ', обязательный шаг' : ''));
-    if (row.draggable) { row.setAttribute('aria-keyshortcuts', 'Alt+ArrowUp Alt+ArrowDown'); row.title = 'Перетащите внутри группы или нажмите Alt + ↑ / ↓'; }
+    if (row.draggable) { row.setAttribute('aria-keyshortcuts', 'Alt+ArrowUp Alt+ArrowDown'); }
     row.classList.toggle('scenario-page-child', !!page.child);
     if (page.glyph && !panelController && !row.querySelector('.scenario-page-icon')) {
       const icon = document.createElement('span');
@@ -114,7 +114,6 @@ function selectDemo(scenario, variant) {
   });
   header.setDevice(state.device);
   header.setZoom(state.zoom);
-  feedback.classList.remove('visible');
   document.querySelector('#demo-stage').dataset.demo = scenario;
   drawRightTools(scenario);
   document.querySelector('.booking-preview').hidden = scenario !== 'booking';
@@ -132,21 +131,17 @@ const demoFrame = DemoFrame.mount({
   scenarios: [
     {id: 'booking', title: 'Виджет записи'},
     {id: 'universal', title: 'Все механики панели', variants: [{id:'free',title:'Свободная структура'}, {id:'steps',title:'Пошаговый сценарий'}, {id:'plain',title:'Без групп'}, {id:'nested',title:'Страницы и вопросы'}]},
-    {id: 'surveys', title: 'Опросы', disabled: true},
-    {id: 'kiosk', title: 'Киоск', disabled: true}
+    {id: 'surveys', title: 'Опросы', disabled: true, hidden: true},
+    {id: 'kiosk', title: 'Киоск', disabled: true, hidden: true}
   ],
   value: {scenario: 'booking'},
   onChange: ({scenario, variant}) => selectDemo(scenario, variant),
+  links: [
+    {title: 'Опросы', href: 'https://www.figma.com/proto/VPmJJzhmFixPkmC2dCPmCL/%D0%9E%D0%BF%D1%80%D0%BE%D1%81-%D0%BA%D0%B0%D0%BA-%D1%84%D0%B0%D0%B9%D0%BB?node-id=14758-194249&p=f&viewport=-3837%2C7097%2C0.07&t=UQhpG2utiQItgzYi-8&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=14431%3A130151&page-id=1514%3A382793&hotspot-hints=0&hide-ui=1'},
+    {title: 'Виджет записи', href: 'https://axure.tensor.ru/project-time8/#g=1&p=%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D0%BE%D1%80_%D0%B2%D0%B8%D0%B4%D0%B6%D0%B5%D1%82%D0%B0_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8&c=1'}
+  ],
   team: [{label: 'Design', name: 'Пахтусова Ирина'}, {label: 'Develop'}]
 });
-const feedback = document.querySelector('#feedback');
-let feedbackTimer;
-function notify(message) {
-  clearTimeout(feedbackTimer);
-  feedback.textContent = message;
-  feedback.classList.add('visible');
-  feedbackTimer = setTimeout(() => feedback.classList.remove('visible'), 5000);
-}
 const header = BuilderHeader.mount(document.querySelector('#builder-header'), {
   title: 'Виджет записи',
   icon: null,
@@ -155,12 +150,12 @@ const header = BuilderHeader.mount(document.querySelector('#builder-header'), {
   onSave() {
     try {
       localStorage.setItem(activeDemo + '-widget-header', JSON.stringify({device: header.device, zoom: header.zoom}));
-      notify('Настройки шапки сохранены в этом браузере.');
-    } catch { notify('Не удалось сохранить настройки в браузере.'); }
+      
+    } catch {  }
     return false;
   },
-  onPreview() { notify('Предпросмотр появится на следующем этапе демо.'); },
-  onClose() { notify('Вы находитесь в демо конструктора.'); }
+  onPreview() {  },
+  onClose() {  }
 });
 try {
   const saved = JSON.parse(localStorage.getItem('booking-widget-header'));
@@ -200,7 +195,7 @@ const sidebar = LeftSidebar.mount(document.querySelector('.lsb'), {
   onAction(action, page) {
     if (panelController && panelController.action(action, page) === false) return false;
     if (activeDemo === 'booking' && ((page?.required && ['hide','delete'].includes(action)) || action === 'home')) {
-      notify('Обязательные шаги и их порядок в виджете записи фиксированы.');
+      
       return false;
     }
   }
@@ -208,7 +203,6 @@ const sidebar = LeftSidebar.mount(document.querySelector('.lsb'), {
 decoratePages();
 // Preserve scenario icons and keyboard access after library-driven row renders.
 new MutationObserver(decoratePages).observe(document.querySelector('.lsb__list'), {childList: true});
-document.querySelectorAll('.rsb button').forEach(button => button.addEventListener('click', () => notify('Панели инструментов добавим на следующем этапе демо.')));
 group.addEventListener('keydown', event => {
   const buttons = [...group.querySelectorAll('[role="radio"]')];
   const current = buttons.indexOf(document.activeElement);

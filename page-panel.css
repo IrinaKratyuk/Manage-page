@@ -9,13 +9,14 @@
 .lsb__group:is(:hover,:focus-visible,:has(:focus-visible),.is-menu) .lsb__group-actions{display:flex}
 .lsb__group[draggable="true"],.lsb__page[draggable="true"]{cursor:default}
 .lsb__page[draggable="true"]:active,.lsb__group[draggable="true"]:active{cursor:grabbing}
-.lsb__page:focus-within:not(.is-edit)>.lsb__cmds{display:flex}
+.lsb__page:focus-visible,:has(:focus-visible):not(.is-edit)>.lsb__cmds{display:flex}
 /* Insertion marker: Figma cOZH8uus26n9SyU5ORX62K 832:220473. */
 .lsb__insert{position:absolute;z-index:5;left:8px;right:8px;height:4px;border-radius:21px;background:rgba(123,98,248,.5);pointer-events:none}
 .lsb__page-icon{display:inline-flex;flex:none;align-items:center;justify-content:center;width:24px;height:24px;font:24px/1 cbuc-icons24;color:var(--icon-label_icon-color)}
 .lsb__list.has-page-icons .lsb__marker{margin-right:0}
 .lsb__page.is-off .lsb__page-icon{color:var(--text-unaccented_text-color)}
-.lsb__page--question{margin-left:30px}
+.lsb__page--question{margin-left:0}
+.lsb__list.has-page-icons .lsb__page--question>.lsb__marker{margin-right:30px}
 .lsb__page-icon-toggle{border:0;background:none;color:inherit;cursor:pointer;padding:0}
 .lsb__group-input{width:100%;min-width:0;border:0;border-bottom:1px solid var(--border-unaccented_border-color);font:inherit;background:transparent;color:var(--text-text-color)}
 .lsb__settings.pe{max-height:100%;overflow-y:auto}
@@ -56,8 +57,8 @@
 /* Hover commands replace status icons in the same right-hand slot. */
 .lsb .lsb__row-controls{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;min-width:28px;min-height:28px;background:transparent}
 .lsb .lsb__row-controls>.lsb__cmds{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;visibility:hidden;flex:none;background:transparent}
-.lsb__page:is(:hover,:focus-within,.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__cmds{visibility:visible}
-.lsb__page:is(:hover,:focus-within,.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__page-status{visibility:hidden}
+.lsb__page:is(:hover,:focus-visible,:has(:focus-visible),.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__cmds{visibility:visible}
+.lsb__page:is(:hover,:focus-visible,:has(:focus-visible),.is-menu):not(.is-edit)>.lsb__row-controls>.lsb__page-status{visibility:hidden}
 .lsb__page.is-edit>.lsb__row-controls{display:none}
 .lsb__page:has(.lsb__page-status)>.lsb__page-name{padding-right:32px}
 .lsb__group:is(:hover,:focus-visible,:has(:focus-visible))>.lsb__group-name{color:var(--text-label_hover_text-color)}
@@ -66,4 +67,17 @@
 .lsb__page--survey>.lsb__page-icon img{display:block;flex:none}
 .lsb__page--question.is-off>.lsb__page-icon{opacity:.5}
 .lsb .lsb__row-controls{background:transparent}
-.lsb__page:is(:hover,:focus-within,.is-menu)>.lsb__row-controls{background:var(--components-list-master_item_hover_background-color_list)}
+.lsb__page:is(:hover,:focus-visible,:has(:focus-visible),.is-menu)>.lsb__row-controls{background:var(--components-list-master_item_hover_background-color_list)}
+
+/* Explicit forbidden-drop indicator next to the drag pointer. */
+.drag-denied-icon{position:fixed;z-index:10000;width:18px;height:18px;border:2px solid #e53935;border-radius:50%;background:#fff;pointer-events:none;box-sizing:border-box}
+.drag-denied-icon::after{content:'';position:absolute;left:6px;top:-1px;width:2px;height:16px;background:#e53935;transform:rotate(-45deg)}
+.drag-denied-icon[hidden]{display:none}
+
+.lsb__drag-image{position:fixed!important;left:-10000px!important;top:0!important;margin:0!important;background:var(--background-background-color)!important;box-shadow:0 6px 22px rgba(0,0,0,.18);border-radius:8px;pointer-events:none;z-index:10001}
+.lsb__drag-image .lsb__row-controls{display:none!important}
+.lsb__page.is-dragging,.lsb__group.is-dragging{opacity:.35}
+
+.lsb__drag-image:is(.is-active,[aria-selected="true"]){background:var(--components-list-master_item_hover_background-color_list)!important}
+
+.df-links>.btn{justify-content:flex-start}

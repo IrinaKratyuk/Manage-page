@@ -23,7 +23,7 @@ button:focus-visible{outline:2px solid #587ab0;outline-offset:3px}
 .df-panel button:focus-visible{outline:2px solid #587ab0;outline-offset:2px}
 /* Geometry and assets: Axure #u456 (874×848), #u508 (137,67; 600×768).
    Fit the static canvas to the available width; keep the editor at its original size. */
-.booking-preview{height:100%;overflow-x:hidden;overflow-y:auto;padding:0 0 8px 8px}
+.booking-preview{height:100%;overflow:clip;padding:0 0 8px 8px}
 .axure-canvas{position:relative;width:874px;height:848px;margin:0 auto;background:rgb(209,183,201);border-radius:8px;overflow:hidden;zoom:var(--preview-scale,1)}
 .axure-bg{position:absolute;top:0;height:251px;pointer-events:none}
 .axure-bg-left{left:0;width:65px}
