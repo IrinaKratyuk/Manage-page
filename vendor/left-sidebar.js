@@ -173,7 +173,6 @@
       if (!btn) return;
       const label = floating() ? 'Закрепить панель' : 'Свернуть панель';
       btn.setAttribute('aria-label', label);
-      btn.title = label;
       const icon = q('.btn__icon', btn);
       if (icon) icon.textContent = floating() ? '' : '';
     }

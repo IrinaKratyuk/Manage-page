@@ -32,7 +32,7 @@
   function glyph(code, cls) { return '<span class="' + cls + '" aria-hidden="true">&#x' + code + ';</span>'; }
   // Кнопка-иконка кита: view — 'ghost' (история) или 'link' (масштаб), size — 'xl' или 'm'
   function iconBtn(cmd, label, code, view, size, extra) {
-    return '<button type="button" class="btn btn--' + view + ' btn--style-secondary btn--size-' + size + ' btn--icon" data-bhd-cmd="' + cmd + '" aria-label="' + esc(label) + '" title="' + esc(label) + '"' + (extra || '') + '>' + glyph(code, 'btn__icon') + '</button>';
+    return '<button type="button" class="btn btn--' + view + ' btn--style-secondary btn--size-' + size + ' btn--icon" data-bhd-cmd="' + cmd + '" aria-label="' + esc(label) + '"' + (extra || '') + '>' + glyph(code, 'btn__icon') + '</button>';
   }
 
   function mount(root, options) {
@@ -62,7 +62,7 @@
       html += '<div class="bhd__center">';
       if (devices.length) {
         html += '<div class="tumbler tumbler--size-m" role="radiogroup" aria-label="Размер экрана">' + devices.map(function (d) {
-          return '<button type="button" class="tumbler__item" role="radio" data-bhd-cmd="device" data-bhd-device="' + d.id + '" aria-checked="' + (d.id === device) + '" aria-label="' + esc(d.label) + '" title="' + esc(d.label) + '">' + glyph(d.glyph, 'tumbler__icon') + '</button>';
+          return '<button type="button" class="tumbler__item" role="radio" data-bhd-cmd="device" data-bhd-device="' + d.id + '" aria-checked="' + (d.id === device) + '" aria-label="' + esc(d.label) + '">' + glyph(d.glyph, 'tumbler__icon') + '</button>';
         }).join('') + '</div>';
       }
       if (o.centerZoom) html += '<button type="button" class="btn btn--link btn--style-secondary btn--size-m bhd__center-zoom" data-bhd-cmd="zoom-reset" aria-label="Масштаб 100%">100%</button>';

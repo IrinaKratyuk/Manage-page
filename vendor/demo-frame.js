@@ -71,7 +71,7 @@
     let html = '';
     if (links && links.length) {
       html += `<div class="df-links">${links.map((l) =>
-        `<a class="df-link" href="${esc(l.href)}" target="_blank" rel="noopener"><span class="df-link__ico">${ICONS.link}</span><span>${esc(l.title)}</span></a>`).join('')}</div>`;
+        `<a class="btn btn--link btn--style-secondary btn--size-m" href="${esc(l.href)}" target="_blank" rel="noopener"><span class="btn__icon">${ICONS.link}</span><span class="btn__caption">${esc(l.title)}</span></a>`).join('')}</div>`;
     }
     for (const t of team || []) {
       const info = (t.name || (t.links && t.links.length))
